@@ -9,4 +9,4 @@ require (
 
 require github.com/pkg/errors v0.9.1 // indirect
 
-replace github.com/realbucksavage/stargate => github.com/realbucksavage/stargate v0.0.0-20220812052043-fab4f99f4170
+replace github.com/realbucksavage/stargate => github.com/realbucksavage/stargate v0.0.0-20220826104108-acff1d98655f

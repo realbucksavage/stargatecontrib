@@ -1,8 +1,11 @@
 package middleware
 
 import (
+	"bufio"
+	"errors"
 	"io"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"time"
@@ -18,6 +21,15 @@ type loggingResponseWriter struct {
 func (lrw *loggingResponseWriter) WriteHeader(code int) {
 	lrw.status = code
 	lrw.ResponseWriter.WriteHeader(code)
+}
+
+func (lrw *loggingResponseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	h, ok := lrw.ResponseWriter.(http.Hijacker)
+	if !ok {
+		return nil, nil, errors.New("stargate - Hijack() called on a non-hijacker response")
+	}
+
+	return h.Hijack()
 }
 
 func Logging() stargate.MiddlewareFunc {
